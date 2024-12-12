@@ -1,0 +1,1500 @@
+{
+	"jobConfig": {
+		"name": "asp-zillow-analytics-transform-final",
+		"description": "",
+		"role": "arn:aws:iam::590184075536:role/aws-project-glue-s3-role",
+		"command": "glueetl",
+		"version": "5.0",
+		"runtime": null,
+		"workerType": "G.1X",
+		"numberOfWorkers": 10,
+		"maxCapacity": 10,
+		"jobRunQueuingEnabled": false,
+		"maxRetries": 0,
+		"timeout": 480,
+		"maxConcurrentRuns": 1,
+		"security": "none",
+		"scriptName": "asp-zillow-analytics-transform-final.py",
+		"scriptLocation": "s3://aws-glue-assets-590184075536-us-east-1/scripts/",
+		"language": "python-3",
+		"spark": true,
+		"sparkConfiguration": "standard",
+		"jobParameters": [],
+		"tags": [],
+		"jobMode": "VISUAL_MODE",
+		"createdOn": "2024-12-08T02:56:00.557Z",
+		"developerMode": false,
+		"connectionsList": [],
+		"temporaryDirectory": "s3://aws-glue-assets-590184075536-us-east-1/temporary/",
+		"logging": true,
+		"glueHiveMetastore": true,
+		"etlAutoTuning": true,
+		"metrics": true,
+		"observabilityMetrics": true,
+		"bookmark": "job-bookmark-disable",
+		"sparkPath": "s3://aws-glue-assets-590184075536-us-east-1/sparkHistoryLogs/",
+		"flexExecution": false,
+		"minFlexWorkers": null,
+		"maintenanceWindow": null
+	},
+	"dag": {
+		"node-1733626584085": {
+			"nodeId": "node-1733626584085",
+			"dataPreview": false,
+			"previewAmount": 0,
+			"inputs": [
+				"node-1733625584805"
+			],
+			"name": "Amazon S3",
+			"generatedNodeName": "AmazonS3_node1733626584085",
+			"classification": "DataSink",
+			"type": "S3",
+			"streamingBatchInterval": 100,
+			"format": "glueparquet",
+			"compression": "snappy",
+			"path": "s3://asp-project-analytics",
+			"partitionKeys": [
+				"address_state",
+				"propertytype"
+			],
+			"schemaChangePolicy": {
+				"enableUpdateCatalog": true,
+				"updateBehavior": "LOG",
+				"database": "asp_zillow_analytics_db",
+				"table": "final_analytics"
+			},
+			"updateCatalogOptions": "partitions",
+			"autoDataQuality": {
+				"isEnabled": true,
+				"evaluationContext": "EvaluateDataQuality_node1733625152081"
+			},
+			"calculatedType": "",
+			"codeGenVersion": 2
+		},
+		"node-1733625584805": {
+			"nodeId": "node-1733625584805",
+			"dataPreview": false,
+			"previewAmount": 0,
+			"inputs": [
+				"node-1733625160576"
+			],
+			"name": "Change Schema",
+			"generatedNodeName": "ChangeSchema_node1733625584805",
+			"classification": "Transform",
+			"type": "ApplyMapping",
+			"mapping": [
+				{
+					"toKey": "zpid",
+					"fromPath": [
+						"zpid"
+					],
+					"toType": "string",
+					"fromType": "bigint",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "isfeatured",
+					"fromPath": [
+						"isfeatured"
+					],
+					"toType": "boolean",
+					"fromType": "boolean",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "isshowcaselisting",
+					"fromPath": [
+						"isshowcaselisting"
+					],
+					"toType": "boolean",
+					"fromType": "boolean",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "currency",
+					"fromPath": [
+						"currency"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "country",
+					"fromPath": [
+						"country"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "listingdatetimeonzillow",
+					"fromPath": [
+						"listingdatetimeonzillow"
+					],
+					"toType": "timestamp",
+					"fromType": "bigint",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "bestguesstimezone",
+					"fromPath": [
+						"bestguesstimezone"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "isunmappable",
+					"fromPath": [
+						"isunmappable"
+					],
+					"toType": "boolean",
+					"fromType": "boolean",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "bathrooms",
+					"fromPath": [
+						"bathrooms"
+					],
+					"toType": "float",
+					"fromType": "double",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "bedrooms",
+					"fromPath": [
+						"bedrooms"
+					],
+					"toType": "float",
+					"fromType": "double",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "livingarea",
+					"fromPath": [
+						"livingarea"
+					],
+					"toType": "long",
+					"fromType": "bigint",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "yearbuilt",
+					"fromPath": [
+						"yearbuilt"
+					],
+					"toType": "int",
+					"fromType": "bigint",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "propertytype",
+					"fromPath": [
+						"propertytype"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "daysonzillow",
+					"fromPath": [
+						"daysonzillow"
+					],
+					"toType": "long",
+					"fromType": "bigint",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "ispreforeclosureauction",
+					"fromPath": [
+						"ispreforeclosureauction"
+					],
+					"toType": "boolean",
+					"fromType": "boolean",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "ssid",
+					"fromPath": [
+						"ssid"
+					],
+					"toType": "long",
+					"fromType": "bigint",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "location_latitude",
+					"fromPath": [
+						"location_latitude"
+					],
+					"toType": "double",
+					"fromType": "double",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "location_longitude",
+					"fromPath": [
+						"location_longitude"
+					],
+					"toType": "double",
+					"fromType": "double",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "address_streetaddress",
+					"fromPath": [
+						"address_streetaddress"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "address_zipcode",
+					"fromPath": [
+						"address_zipcode"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "address_city",
+					"fromPath": [
+						"address_city"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "address_state",
+					"fromPath": [
+						"address_state"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "media_propertyphotolinks_highresolutionlink",
+					"fromPath": [
+						"media_propertyphotolinks_highresolutionlink"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "media_thirdpartyphotolinks_streetviewlink",
+					"fromPath": [
+						"media_thirdpartyphotolinks_streetviewlink"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "media_thirdpartyphotolinks_satellitelink",
+					"fromPath": [
+						"media_thirdpartyphotolinks_satellitelink"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "media_thirdpartyphotolinks_streetviewmetadatalink",
+					"fromPath": [
+						"media_thirdpartyphotolinks_streetviewmetadatalink"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "media_hasvrmodel",
+					"fromPath": [
+						"media_hasvrmodel"
+					],
+					"toType": "boolean",
+					"fromType": "boolean",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "media_hasvideos",
+					"fromPath": [
+						"media_hasvideos"
+					],
+					"toType": "boolean",
+					"fromType": "boolean",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "media_hasapprovedthirdpartyvirtualtour",
+					"fromPath": [
+						"media_hasapprovedthirdpartyvirtualtour"
+					],
+					"toType": "boolean",
+					"fromType": "boolean",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "media_allpropertyphotos_highresolution",
+					"fromPath": [
+						"media_allpropertyphotos_highresolution"
+					],
+					"toType": "array",
+					"fromType": "array",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "rental_areapplicationsaccepted",
+					"fromPath": [
+						"rental_areapplicationsaccepted"
+					],
+					"toType": "boolean",
+					"fromType": "boolean",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "lotsizewithunit_lotsize",
+					"fromPath": [
+						"lotsizewithunit_lotsize"
+					],
+					"toType": "float",
+					"fromType": "double",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "lotsizewithunit_lotsizeunit",
+					"fromPath": [
+						"lotsizewithunit_lotsizeunit"
+					],
+					"toType": "float",
+					"fromType": "string",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "listing_listingstatus",
+					"fromPath": [
+						"listing_listingstatus"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "listing_listingsubtype_isfsba",
+					"fromPath": [
+						"listing_listingsubtype_isfsba"
+					],
+					"toType": "boolean",
+					"fromType": "boolean",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "price_value",
+					"fromPath": [
+						"price_value"
+					],
+					"toType": "long",
+					"fromType": "bigint",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "price_pricepersquarefoot",
+					"fromPath": [
+						"price_pricepersquarefoot"
+					],
+					"toType": "float",
+					"fromType": "double",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "zillowownedproperty_iszillowowned",
+					"fromPath": [
+						"zillowownedproperty_iszillowowned"
+					],
+					"toType": "boolean",
+					"fromType": "boolean",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "taxassessment_taxassessedvalue",
+					"fromPath": [
+						"taxassessment_taxassessedvalue"
+					],
+					"toType": "double",
+					"fromType": "double",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "taxassessment_taxassessmentyear",
+					"fromPath": [
+						"taxassessment_taxassessmentyear"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "hdpview_listingstatus",
+					"fromPath": [
+						"hdpview_listingstatus"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "hdpview_price",
+					"fromPath": [
+						"hdpview_price"
+					],
+					"toType": "long",
+					"fromType": "bigint",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "hdpview_hdpurl",
+					"fromPath": [
+						"hdpview_hdpurl"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "personalizedresult_isviewed",
+					"fromPath": [
+						"personalizedresult_isviewed"
+					],
+					"toType": "boolean",
+					"fromType": "boolean",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "personalizedresult_userrecommendation_isrecommendedforyou",
+					"fromPath": [
+						"personalizedresult_userrecommendation_isrecommendedforyou"
+					],
+					"toType": "boolean",
+					"fromType": "boolean",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "personalizedresult_userrecommendation_mappintag",
+					"fromPath": [
+						"personalizedresult_userrecommendation_mappintag"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "personalizedresult_userrecommendation_analyticsdata_hrsrequestid",
+					"fromPath": [
+						"personalizedresult_userrecommendation_analyticsdata_hrsrequestid"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "personalizedresult_userrecommendation_homeinsight",
+					"fromPath": [
+						"personalizedresult_userrecommendation_homeinsight"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "propertydisplayrules_canshowaddress",
+					"fromPath": [
+						"propertydisplayrules_canshowaddress"
+					],
+					"toType": "boolean",
+					"fromType": "boolean",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "propertydisplayrules_canshowonmap",
+					"fromPath": [
+						"propertydisplayrules_canshowonmap"
+					],
+					"toType": "boolean",
+					"fromType": "boolean",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "propertydisplayrules_mls_brokername",
+					"fromPath": [
+						"propertydisplayrules_mls_brokername"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "propertydisplayrules_listingcategory",
+					"fromPath": [
+						"propertydisplayrules_listingcategory"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "listing_listingsubtype_isnewconstruction",
+					"fromPath": [
+						"listing_listingsubtype_isnewconstruction"
+					],
+					"toType": "boolean",
+					"fromType": "boolean",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "newconstruction_ispremierbuilder",
+					"fromPath": [
+						"newconstruction_ispremierbuilder"
+					],
+					"toType": "boolean",
+					"fromType": "boolean",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "newconstruction_newconstructiontype",
+					"fromPath": [
+						"newconstruction_newconstructiontype"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "price_changeddate",
+					"fromPath": [
+						"price_changeddate"
+					],
+					"toType": "date",
+					"fromType": "double",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "price_pricechange",
+					"fromPath": [
+						"price_pricechange"
+					],
+					"toType": "double",
+					"fromType": "double",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "openhouseshowinglist",
+					"fromPath": [
+						"openhouseshowinglist"
+					],
+					"toType": "array",
+					"fromType": "array",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "listing_listingsubtype_isopenhouse",
+					"fromPath": [
+						"listing_listingsubtype_isopenhouse"
+					],
+					"toType": "boolean",
+					"fromType": "boolean",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "propertydisplayrules_builder_name",
+					"fromPath": [
+						"propertydisplayrules_builder_name"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "mapdottag_name",
+					"fromPath": [
+						"mapdottag_name"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "listing_listingsubtype_isforauction",
+					"fromPath": [
+						"listing_listingsubtype_isforauction"
+					],
+					"toType": "null",
+					"fromType": "null",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "estimates_rentzestimate",
+					"fromPath": [
+						"estimates_rentzestimate"
+					],
+					"toType": "float",
+					"fromType": "double",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "propertydisplayrules_agent_agentname",
+					"fromPath": [
+						"propertydisplayrules_agent_agentname"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "estimates_zestimate",
+					"fromPath": [
+						"estimates_zestimate"
+					],
+					"toType": "double",
+					"fromType": "double",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "address_buildingid",
+					"fromPath": [
+						"address_buildingid"
+					],
+					"toType": "double",
+					"fromType": "double",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "propertydisplayrules_providerlogo",
+					"fromPath": [
+						"propertydisplayrules_providerlogo"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "propertydisplayrules_mls_mlsname",
+					"fromPath": [
+						"propertydisplayrules_mls_mlsname"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "listing_providerlistingid",
+					"fromPath": [
+						"listing_providerlistingid"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "region_subdivisionid",
+					"fromPath": [
+						"region_subdivisionid"
+					],
+					"toType": "double",
+					"fromType": "double",
+					"dropped": true,
+					"children": null
+				},
+				{
+					"toKey": "region_groupname",
+					"fromPath": [
+						"region_groupname"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": false,
+					"children": null
+				}
+			],
+			"parentsValid": true,
+			"calculatedType": "",
+			"codeGenVersion": 2
+		},
+		"node-1733625160576": {
+			"nodeId": "node-1733625160576",
+			"dataPreview": false,
+			"previewAmount": 0,
+			"inputs": [],
+			"name": "Amazon S3",
+			"generatedNodeName": "AmazonS3_node1733625160576",
+			"classification": "DataSource",
+			"type": "S3",
+			"isCatalog": false,
+			"format": "parquet",
+			"paths": [
+				"s3://aws-project-cleansed-dev"
+			],
+			"compressionType": null,
+			"exclusions": [],
+			"groupFiles": null,
+			"groupSize": null,
+			"recurse": true,
+			"maxBand": null,
+			"maxFilesInBand": null,
+			"additionalOptions": {
+				"boundedSize": null,
+				"boundedFiles": null,
+				"enableSamplePath": false,
+				"samplePath": "s3://aws-project-cleansed-dev/zillow/0ac6b19db572426682c2f60e52fa029f.snappy.parquet",
+				"boundedOption": null
+			},
+			"outputSchemas": [
+				[
+					{
+						"key": "zpid",
+						"fullPath": [
+							"zpid"
+						],
+						"type": "bigint",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "isfeatured",
+						"fullPath": [
+							"isfeatured"
+						],
+						"type": "boolean",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "isshowcaselisting",
+						"fullPath": [
+							"isshowcaselisting"
+						],
+						"type": "boolean",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "currency",
+						"fullPath": [
+							"currency"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "country",
+						"fullPath": [
+							"country"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "listingdatetimeonzillow",
+						"fullPath": [
+							"listingdatetimeonzillow"
+						],
+						"type": "bigint",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "bestguesstimezone",
+						"fullPath": [
+							"bestguesstimezone"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "isunmappable",
+						"fullPath": [
+							"isunmappable"
+						],
+						"type": "boolean",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "bathrooms",
+						"fullPath": [
+							"bathrooms"
+						],
+						"type": "double",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "bedrooms",
+						"fullPath": [
+							"bedrooms"
+						],
+						"type": "double",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "livingarea",
+						"fullPath": [
+							"livingarea"
+						],
+						"type": "bigint",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "yearbuilt",
+						"fullPath": [
+							"yearbuilt"
+						],
+						"type": "bigint",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "propertytype",
+						"fullPath": [
+							"propertytype"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "daysonzillow",
+						"fullPath": [
+							"daysonzillow"
+						],
+						"type": "bigint",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "ispreforeclosureauction",
+						"fullPath": [
+							"ispreforeclosureauction"
+						],
+						"type": "boolean",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "ssid",
+						"fullPath": [
+							"ssid"
+						],
+						"type": "bigint",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "location_latitude",
+						"fullPath": [
+							"location_latitude"
+						],
+						"type": "double",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "location_longitude",
+						"fullPath": [
+							"location_longitude"
+						],
+						"type": "double",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "address_streetaddress",
+						"fullPath": [
+							"address_streetaddress"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "address_zipcode",
+						"fullPath": [
+							"address_zipcode"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "address_city",
+						"fullPath": [
+							"address_city"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "address_state",
+						"fullPath": [
+							"address_state"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "media_propertyphotolinks_highresolutionlink",
+						"fullPath": [
+							"media_propertyphotolinks_highresolutionlink"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "media_thirdpartyphotolinks_streetviewlink",
+						"fullPath": [
+							"media_thirdpartyphotolinks_streetviewlink"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "media_thirdpartyphotolinks_satellitelink",
+						"fullPath": [
+							"media_thirdpartyphotolinks_satellitelink"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "media_thirdpartyphotolinks_streetviewmetadatalink",
+						"fullPath": [
+							"media_thirdpartyphotolinks_streetviewmetadatalink"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "media_hasvrmodel",
+						"fullPath": [
+							"media_hasvrmodel"
+						],
+						"type": "boolean",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "media_hasvideos",
+						"fullPath": [
+							"media_hasvideos"
+						],
+						"type": "boolean",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "media_hasapprovedthirdpartyvirtualtour",
+						"fullPath": [
+							"media_hasapprovedthirdpartyvirtualtour"
+						],
+						"type": "boolean",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "media_allpropertyphotos_highresolution",
+						"fullPath": [
+							"media_allpropertyphotos_highresolution"
+						],
+						"type": "string array",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "rental_areapplicationsaccepted",
+						"fullPath": [
+							"rental_areapplicationsaccepted"
+						],
+						"type": "boolean",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "lotsizewithunit_lotsize",
+						"fullPath": [
+							"lotsizewithunit_lotsize"
+						],
+						"type": "double",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "lotsizewithunit_lotsizeunit",
+						"fullPath": [
+							"lotsizewithunit_lotsizeunit"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "listing_listingstatus",
+						"fullPath": [
+							"listing_listingstatus"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "listing_listingsubtype_isfsba",
+						"fullPath": [
+							"listing_listingsubtype_isfsba"
+						],
+						"type": "boolean",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "price_value",
+						"fullPath": [
+							"price_value"
+						],
+						"type": "bigint",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "price_pricepersquarefoot",
+						"fullPath": [
+							"price_pricepersquarefoot"
+						],
+						"type": "double",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "zillowownedproperty_iszillowowned",
+						"fullPath": [
+							"zillowownedproperty_iszillowowned"
+						],
+						"type": "boolean",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "taxassessment_taxassessedvalue",
+						"fullPath": [
+							"taxassessment_taxassessedvalue"
+						],
+						"type": "double",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "taxassessment_taxassessmentyear",
+						"fullPath": [
+							"taxassessment_taxassessmentyear"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "hdpview_listingstatus",
+						"fullPath": [
+							"hdpview_listingstatus"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "hdpview_price",
+						"fullPath": [
+							"hdpview_price"
+						],
+						"type": "bigint",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "hdpview_hdpurl",
+						"fullPath": [
+							"hdpview_hdpurl"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "personalizedresult_isviewed",
+						"fullPath": [
+							"personalizedresult_isviewed"
+						],
+						"type": "boolean",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "personalizedresult_userrecommendation_isrecommendedforyou",
+						"fullPath": [
+							"personalizedresult_userrecommendation_isrecommendedforyou"
+						],
+						"type": "boolean",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "personalizedresult_userrecommendation_mappintag",
+						"fullPath": [
+							"personalizedresult_userrecommendation_mappintag"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "personalizedresult_userrecommendation_analyticsdata_hrsrequestid",
+						"fullPath": [
+							"personalizedresult_userrecommendation_analyticsdata_hrsrequestid"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "personalizedresult_userrecommendation_homeinsight",
+						"fullPath": [
+							"personalizedresult_userrecommendation_homeinsight"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "propertydisplayrules_canshowaddress",
+						"fullPath": [
+							"propertydisplayrules_canshowaddress"
+						],
+						"type": "boolean",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "propertydisplayrules_canshowonmap",
+						"fullPath": [
+							"propertydisplayrules_canshowonmap"
+						],
+						"type": "boolean",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "propertydisplayrules_mls_brokername",
+						"fullPath": [
+							"propertydisplayrules_mls_brokername"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "propertydisplayrules_listingcategory",
+						"fullPath": [
+							"propertydisplayrules_listingcategory"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "listing_listingsubtype_isnewconstruction",
+						"fullPath": [
+							"listing_listingsubtype_isnewconstruction"
+						],
+						"type": "boolean",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "newconstruction_ispremierbuilder",
+						"fullPath": [
+							"newconstruction_ispremierbuilder"
+						],
+						"type": "boolean",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "newconstruction_newconstructiontype",
+						"fullPath": [
+							"newconstruction_newconstructiontype"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "price_changeddate",
+						"fullPath": [
+							"price_changeddate"
+						],
+						"type": "double",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "price_pricechange",
+						"fullPath": [
+							"price_pricechange"
+						],
+						"type": "double",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "openhouseshowinglist",
+						"fullPath": [
+							"openhouseshowinglist"
+						],
+						"type": "array",
+						"glueStudioType": null,
+						"children": [
+							{
+								"key": "endtime",
+								"fullPath": [
+									"openhouseshowinglist",
+									"endtime"
+								],
+								"type": "bigint",
+								"glueStudioType": null,
+								"children": null
+							},
+							{
+								"key": "starttime",
+								"fullPath": [
+									"openhouseshowinglist",
+									"starttime"
+								],
+								"type": "bigint",
+								"glueStudioType": null,
+								"children": null
+							}
+						]
+					},
+					{
+						"key": "listing_listingsubtype_isopenhouse",
+						"fullPath": [
+							"listing_listingsubtype_isopenhouse"
+						],
+						"type": "boolean",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "propertydisplayrules_builder_name",
+						"fullPath": [
+							"propertydisplayrules_builder_name"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "mapdottag_name",
+						"fullPath": [
+							"mapdottag_name"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "listing_listingsubtype_isforauction",
+						"fullPath": [
+							"listing_listingsubtype_isforauction"
+						],
+						"type": "null",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "estimates_rentzestimate",
+						"fullPath": [
+							"estimates_rentzestimate"
+						],
+						"type": "double",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "propertydisplayrules_agent_agentname",
+						"fullPath": [
+							"propertydisplayrules_agent_agentname"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "estimates_zestimate",
+						"fullPath": [
+							"estimates_zestimate"
+						],
+						"type": "double",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "address_buildingid",
+						"fullPath": [
+							"address_buildingid"
+						],
+						"type": "double",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "propertydisplayrules_providerlogo",
+						"fullPath": [
+							"propertydisplayrules_providerlogo"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "propertydisplayrules_mls_mlsname",
+						"fullPath": [
+							"propertydisplayrules_mls_mlsname"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "listing_providerlistingid",
+						"fullPath": [
+							"listing_providerlistingid"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "region_subdivisionid",
+						"fullPath": [
+							"region_subdivisionid"
+						],
+						"type": "double",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "region_groupname",
+						"fullPath": [
+							"region_groupname"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					}
+				]
+			],
+			"calculatedType": "",
+			"codeGenVersion": 2,
+			"inferSchemaChanged": true
+		}
+	},
+	"hasBeenSaved": false,
+	"usageProfileName": null
+}

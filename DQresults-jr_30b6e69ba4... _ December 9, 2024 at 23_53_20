@@ -1,0 +1,24 @@
+[
+	{
+		"ResultId": "dqresult-29065101872a09efbaf20a85c2e898c9104c3ba6",
+		"ProfileId": "dqprofile-8e850b9488a0f62ee661783fc5ae0f3d1d57ced7",
+		"Score": 1,
+		"RulesetName": "EvaluateDataQuality_node1733625152081",
+		"EvaluationContext": "EvaluateDataQuality_node1733625152081",
+		"StartedOn": "2024-12-09T23:55:07.358Z",
+		"CompletedOn": "2024-12-09T23:55:10.213Z",
+		"JobName": "asp-zillow-analytics-transform-final",
+		"JobRunId": "jr_30b6e69ba4fc3d38685a8105ccafcfca12fa982f6910fcac674ec7f2cc02dc20",
+		"RuleResults": [
+			{
+				"Name": "Rule_1",
+				"Description": "ColumnCount > 0",
+				"Result": "PASS",
+				"EvaluatedMetrics": {
+					"Dataset.*.ColumnCount": 29
+				},
+				"EvaluatedRule": "ColumnCount > 0"
+			}
+		]
+	}
+]
